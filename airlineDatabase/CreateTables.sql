@@ -81,3 +81,48 @@ CREATE TABLE tblLUGGAGE(
 )
 GO
 
+-------------------------- Cynthia's tables (05/10) --------------------------
+CREATE TABLE tblMAINTENANCE_TYPE (
+    MaintenanceTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    MaintenanceTypeName VARCHAR(100),
+    MaintenanceTypeDescr VARCHAR(200)
+)
+
+CREATE TABLE tblMAINTENANCE (
+    MaintenanceID INT IDENTITY(1,1) PRIMARY KEY,
+    MaintenanceName VARCHAR(100),
+    MaintenanceTypeID INT FOREIGN KEY REFERENCES tblMAINTENANCE_TYPE(MaintenanceTypeID) NOT NULL
+)
+
+CREATE TABLE tblPLANE_TYPE (
+    PlaneTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    PlaneTypeName VARCHAR(100),
+    PlaneTypeDescr VARCHAR(200)
+)
+
+CREATE TABLE tblPLANE (
+    PlaneID INT IDENTITY(1,1) PRIMARY KEY,
+    PlaneName VARCHAR(100),
+    SeatCount INT,
+    PlaneTypeID INT FOREIGN KEY REFERENCES tblPLANE_TYPE(PlaneTypeID)
+)
+
+CREATE TABLE tblPLANE_MAINTENANCE (
+    PlaneMaintenanceID INT IDENTITY(1,1) PRIMARY KEY,
+    MaintenanceDate DATE,
+    PlaneID INT FOREIGN KEY REFERENCES tblPLANE(PlaneID),
+    MaintenanceID INT FOREIGN KEY REFERENCES tblMAINTENANCE(MaintenanceID)
+)
+
+CREATE TABLE tblCLASS (
+    ClassID INT IDENTITY(1,1) PRIMARY KEY,
+    ClassName VARCHAR(100),
+    ClassDescr VARCHAR(200),
+)
+
+CREATE TABLE tblSEAT (
+    SeatID INT IDENTITY(1,1) PRIMARY KEY,
+    ClassID INT FOREIGN KEY REFERENCES tblCLASS(ClassID),
+    PlaneID INT FOREIGN KEY REFERENCES tblPLANE(PlaneID),
+    SeatName VARCHAR(10),
+)
