@@ -14,6 +14,8 @@ go
 
 Use INFO_430_Proj_04;
 
+BACKUP DATABASE INFO_430_Proj_04 TO DISK = 'C:\SQL\INFO_430_Proj_04.BAK'
+
 CREATE TABLE tblPRODUCT_TYPE(
     ProductTypeID INT IDENTITY(1,1) primary key,
     ProductTypeName varchar(50),
