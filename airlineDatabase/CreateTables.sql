@@ -87,18 +87,21 @@ CREATE TABLE tblMAINTENANCE_TYPE (
     MaintenanceTypeName VARCHAR(100),
     MaintenanceTypeDescr VARCHAR(200)
 )
+GO
 
 CREATE TABLE tblMAINTENANCE (
     MaintenanceID INT IDENTITY(1,1) PRIMARY KEY,
     MaintenanceName VARCHAR(100),
     MaintenanceTypeID INT FOREIGN KEY REFERENCES tblMAINTENANCE_TYPE(MaintenanceTypeID) NOT NULL
 )
+GO
 
 CREATE TABLE tblPLANE_TYPE (
     PlaneTypeID INT IDENTITY(1,1) PRIMARY KEY,
     PlaneTypeName VARCHAR(100),
     PlaneTypeDescr VARCHAR(200)
 )
+GO
 
 CREATE TABLE tblPLANE (
     PlaneID INT IDENTITY(1,1) PRIMARY KEY,
@@ -106,6 +109,7 @@ CREATE TABLE tblPLANE (
     SeatCount INT,
     PlaneTypeID INT FOREIGN KEY REFERENCES tblPLANE_TYPE(PlaneTypeID)
 )
+GO
 
 CREATE TABLE tblPLANE_MAINTENANCE (
     PlaneMaintenanceID INT IDENTITY(1,1) PRIMARY KEY,
@@ -113,12 +117,14 @@ CREATE TABLE tblPLANE_MAINTENANCE (
     PlaneID INT FOREIGN KEY REFERENCES tblPLANE(PlaneID),
     MaintenanceID INT FOREIGN KEY REFERENCES tblMAINTENANCE(MaintenanceID)
 )
+GO
 
 CREATE TABLE tblCLASS (
     ClassID INT IDENTITY(1,1) PRIMARY KEY,
     ClassName VARCHAR(100),
     ClassDescr VARCHAR(200),
 )
+GO
 
 CREATE TABLE tblSEAT (
     SeatID INT IDENTITY(1,1) PRIMARY KEY,
@@ -126,3 +132,65 @@ CREATE TABLE tblSEAT (
     PlaneID INT FOREIGN KEY REFERENCES tblPLANE(PlaneID),
     SeatName VARCHAR(10),
 )
+GO
+
+
+-----------Brian's Tables----------------------------------
+
+-- city, country, region, flights, flighttype, airport, airporttype
+
+CREATE TABLE tblREGION (
+    RegionID INT IDENTITY(1,1) PRIMARY KEY,
+    RegionName VARCHAR(50)
+)
+GO
+
+CREATE TABLE tblCOUNTRY (
+    CountryID INT IDENTITY(1,1) PRIMARY KEY,
+    RegionID INT FOREIGN KEY REFERENCES tblREGION(RegionID),
+    CountryName VARCHAR(50),
+    CountryCode VARCHAR(10)
+)
+GO
+
+CREATE TABLE tblCITY (
+    CityID INT IDENTITY(1,1) PRIMARY KEY,
+    CountryID INT FOREIGN KEY REFERENCES tblCOUNTRY(CountryID),
+    CityName VARCHAR(50)
+)
+GO
+
+CREATE TABLE tblAIRPORT_TYPE (
+    AirportTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    AirportTypeName VARCHAR(50),
+    AirportTypeDescr VARCHAR(50)
+)
+GO
+
+CREATE TABLE tblAIRPORT (
+    AirportID INT IDENTITY(1,1) PRIMARY KEY,
+    AirportTypeID INT FOREIGN KEY REFERENCES tblAIRPORT_TYPE(AirportTypeID),
+    CityID INT FOREIGN KEY REFERENCES tblCITY(CityID),
+    AirportName VARCHAR(50)
+)
+GO
+
+CREATE TABLE tblFLIGHT_TYPE (
+    FlightTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    FlightTypeName VARCHAR(50),
+    FlightTypeDescr VARCHAR(100)
+)
+GO
+
+CREATE TABLE tblFLIGHT (
+    FlightID INT IDENTITY(1,1) PRIMARY KEY,
+    FlightTypeID INT FOREIGN KEY REFERENCES tblFLIGHT_TYPE(FlightTypeID),
+    ArrivalID INT FOREIGN KEY REFERENCES tblAIRPORT(AirportID),
+    DepartureID INT FOREIGN KEY REFERENCES tblAIRPORT(AirportID),
+    FlightName VARCHAR(50),
+    ArrivalTime VARCHAR(50),
+    DepartureTime VARCHAR(50),
+    Miles VARCHAR(50)
+)
+GO
+
