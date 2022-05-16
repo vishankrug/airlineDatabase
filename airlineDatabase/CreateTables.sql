@@ -194,6 +194,63 @@ CREATE TABLE tblFLIGHT (
 )
 GO
 
+--------------------- Romil's Tables ----------------------
+-- order, route, routeFlights, employee, employee_type, employeeFlight, role
+
+CREATE TABLE tblORDER(
+    OrderID INT IDENTITY(1,1) PRIMARY KEY,
+    BookingID INT FOREIGN KEY REFERENCES tblBOOKING(BookingID),
+    OrderDate Date,
+    OrderTotal MONEY
+)
+GO
+
+CREATE TABLE tblROUTE(
+    RouteID INT IDENTITY(1,1) PRIMARY KEY,
+    RouteName Varchar(50)
+)
+GO
+
+CREATE TABLE tblROUTE_FLIGHTS(
+    RouteFlightsID INT IDENTITY(1,1) PRIMARY KEY,
+    RouteID INT FOREIGN KEY REFERENCES tblROUTE(RouteID),
+    FlightID INT FOREIGN KEY REFERENCES tblFLIGHT(FlightID),
+)
+GO
+
+CREATE TABLE tblEMPLOYEE_TYPE(
+    EmployeeTypeID INT IDENTITY(1,1) PRIMARY KEY,
+    EmployeeTypeName Varchar(50),
+    EmployeeTypeDescr Varchar(200)
+)
+GO
+
+CREATE TABLE tblEMPLOYEE (
+    EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
+    EmployeeTypeID INT FOREIGN KEY REFERENCES tblEMPLOYEE_TYPE(EmployeeTypeID),
+    FName VARCHAR(30),
+    LNAME VARCHAR(30),
+    DateOfBirth DATE,
+    StartDate DATE,
+    EndDate DATE
+)
+GO
+
+CREATE TABLE tblROLE (
+    RoleID INT IDENTITY(1,1) PRIMARY KEY,
+    RoleName VARCHAR(30),
+    RoleDescription VARCHAR(200)
+)
+
+GO
+
+CREATE TABLE tblEMPLOYEE_FLIGHT(
+    EmployeeFlightID INT IDENTITY(1,1) PRIMARY KEY,
+    FlightID INT FOREIGN KEY REFERENCES tblFLIGHT(FlightID),
+    EmployeeID INT FOREIGN KEY REFERENCES tblEMPLOYEE(EmployeeID),
+    RoleID INT FOREIGN KEY REFERENCES tblROLE(RoleID)
+)
+GO
 
 
 ------------ populate look up tables (Cynthia 05/16) ------------
