@@ -16,6 +16,9 @@ Use INFO_430_Proj_04;
 
 BACKUP DATABASE INFO_430_Proj_04 TO DISK = 'C:\SQL\INFO_430_Proj_04.BAK'
 
+
+--------------------LOOK UP TABLES---------------------------------------
+
 CREATE TABLE tblPRODUCT_TYPE(
     ProductTypeID INT IDENTITY(1,1) primary key,
     ProductTypeName varchar(50),
@@ -45,6 +48,7 @@ CREATE TABLE tblPASSENGER_TYPE(
     PassengerTypeDescr varchar(255)
 
 )
+GO
 
 CREATE TABLE tblPASSENGER(
     PassengerID INT IDENTITY(1,1) primary key,
@@ -59,25 +63,10 @@ CREATE TABLE tblPASSENGER(
 )
 GO
 
-CREATE TABLE tblBOOKING(
-    BookingID INT IDENTITY(1,1) primary key,
-    PassengerID INT FOREIGN KEY REFERENCES tblPASSENGER(PassengerID) not null,
-    RouteID INT FOREIGN KEY REFERENCES tblROUTE(RouteID) not null,
-    SeatID INT FOREIGN KEY REFERENCES tblSEAT(SeatID) not null
-)
-
 CREATE TABLE tblLUGGAGE_TYPE(
     LuggageTypeID INT IDENTITY(1,1) primary key,
     LuggageTypeName varchar(50) not null,
     LuggageTypeDescription varchar(255)
-)
-GO
-
-CREATE TABLE tblLUGGAGE(
-    LuggageID INT IDENTITY(1,1) primary key,
-    BookingID INT FOREIGN KEY REFERENCES tblBOOKING(BookingID) not null,
-    LuggageWeight INT not null,
-    LuggageTypeID INT FOREIGN KEY REFERENCES tblLUGGAGE_TYPE(LuggageTypeID) not null
 )
 GO
 
@@ -197,14 +186,6 @@ GO
 --------------------- Romil's Tables ----------------------
 -- order, route, routeFlights, employee, employee_type, employeeFlight, role
 
-CREATE TABLE tblORDER(
-    OrderID INT IDENTITY(1,1) PRIMARY KEY,
-    BookingID INT FOREIGN KEY REFERENCES tblBOOKING(BookingID),
-    OrderDate Date,
-    OrderTotal MONEY
-)
-GO
-
 CREATE TABLE tblROUTE(
     RouteID INT IDENTITY(1,1) PRIMARY KEY,
     RouteName Varchar(50)
@@ -241,7 +222,6 @@ CREATE TABLE tblROLE (
     RoleName VARCHAR(30),
     RoleDescription VARCHAR(200)
 )
-
 GO
 
 CREATE TABLE tblEMPLOYEE_FLIGHT(
@@ -252,28 +232,26 @@ CREATE TABLE tblEMPLOYEE_FLIGHT(
 )
 GO
 
+CREATE TABLE tblBOOKING(
+    BookingID INT IDENTITY(1,1) primary key,
+    PassengerID INT FOREIGN KEY REFERENCES tblPASSENGER(PassengerID) not null,
+    RouteID INT FOREIGN KEY REFERENCES tblROUTE(RouteID) not null,
+    SeatID INT FOREIGN KEY REFERENCES tblSEAT(SeatID) not null
+)
+GO
 
------------- populate look up tables (Cynthia 05/16) ------------
+CREATE TABLE tblORDER(
+    OrderID INT IDENTITY(1,1) PRIMARY KEY,
+    BookingID INT FOREIGN KEY REFERENCES tblBOOKING(BookingID),
+    OrderDate Date,
+    OrderTotal MONEY
+)
+GO
 
-INSERT INTO tblPLANE_TYPE
-VALUES('Intercontinental', 'a form of commercial flight within civil aviation where the departure and the arrival take place in different countries'),
-      ('Domestic', 'a form of commercial flight within civil aviation where the departure and the arrival take place in the same country')
-
-INSERT INTO tblMAINTENANCE_TYPE
-VALUES('Line Maintenance', 'Investigate wheels, brakes and fluid levels (oil, hydraulics) are done during transit checks. Any running repairs that the aircraft 
-        tells us it needs through thousands of on-board sensors. Most aircraft would receive about 12 hours of line maintenance per week. 
-        Happen around the world and around the clock.'),
-        ('A Check', 'Every eight to 10 weeks, filters will be changed, key systems (like hydraulics in the ‘control surfaces’ that steer the aircraft) will be lubricated
-         and a detailed inspection of all the emergency equipment (like inflatable slides) is completed. A typical A Check on B737 takes between six and 24 hours.'),
-        ('C Check', 'Happens every 18 months to two years (depending on type of aircraft) and takes three weeks. Can include things like cabin updates/remodeling'),
-        ('D Check', 'This is also known as a C4 or C8 check depending on the aircraft type. This check is performed every six years and the entire aircraft is basically 
-         dismantled and put back together. Everything in the cabin is taken out (seats, toilets, galleys, overhead bins) so engineers can inspect the metal skin of the aircraft, 
-         inside out. The engines are taken off.'),
-        ('Heavy Maintenance', 'Heavy maintenance happens every 18 months to six years depending on the aircraft type and age.')
-
-INSERT INTO tblCLASS
-VALUES('First', 'Generally the most expensive and most comfortable accommodations available.'),
-      ('Business', 'High quality, traditionally purchased by business travelers (sometimes called executive class)'),
-      ('Premium Economy', 'slightly better Economy Class seating (greater distance between rows of seats; the seats themselves may or may not be wider than regular economy class)'),
-      ('Economy', 'Basic accommodation, commonly purchased by leisure travelers'),
-      ('Basic Economy', 'Bare bones fare; typically does no include seat selection or baggage allowance 9which must be purchased separately)')
+CREATE TABLE tblLUGGAGE(
+    LuggageID INT IDENTITY(1,1) primary key,
+    BookingID INT FOREIGN KEY REFERENCES tblBOOKING(BookingID) not null,
+    LuggageWeight INT not null,
+    LuggageTypeID INT FOREIGN KEY REFERENCES tblLUGGAGE_TYPE(LuggageTypeID) not null
+)
+GO
