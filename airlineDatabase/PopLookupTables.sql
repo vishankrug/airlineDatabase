@@ -26,3 +26,25 @@ VALUES('First', 'Generally the most expensive and most comfortable accommodation
       ('Economy', 'Basic accommodation, commonly purchased by leisure travelers'),
       ('Basic Economy', 'Bare bones fare; typically does no include seat selection or baggage allowance 9which must be purchased separately)')
 
+
+
+------------ populate look up tables (Cynthia 05/16) ------------
+
+
+
+---- idk whats going on-----
+INSERT INTO tblMAINTENANCE (MaintenanceName, MaintenanceTypeID)
+VALUES('Lubrication', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'A Check')),
+      ('EmergencyEquipmentCheck', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'A Check')), 
+      ('CabinUpdate', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'B Check')), 
+      ('EngineRemoval', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'D Check')),
+      ('WheelInvestigation', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'Line Maintenance')),
+      ('BrakeInvestigation', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'Line Maintenance')),
+      ('FluidLevelInvestigation', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'Line Maintenance'))
+GO
+
+SELECT *
+FROM tblMAINTENANCE_TYPE
+
+SELECT *
+FROM tblMAINTENANCE
