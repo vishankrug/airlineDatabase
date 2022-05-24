@@ -18,14 +18,6 @@ SET @ProductTypeID = (SELECT ProductTypeID FROM tblPRODUCT_Type WHERE ProductTyp
  
 GO
 
-CREATE OR ALTER PROCEDURE getRouteID
-@RouteName1 varchar(50),
-@RouteID INT OUTPUT --all parameters but one is an output parameter
-AS
-SET @RouteID = (SELECT RouteID FROM tblROUTE WHERE RouteName = @RouteName1)
- 
-GO
-
 CREATE OR ALTER PROCEDURE getPassengerTypeID
 @PassengerTypeName1 varchar(50),
 @PassengerTypeID INT OUTPUT --all parameters but one is an output parameter
@@ -33,10 +25,12 @@ AS
 SET @PassengerTypeID = (SELECT PassengerTypeID FROM tblPASSENGER_TYPE WHERE PassengerTypeName = @PassengerTypeName1)
 
 
-DECLARE @PassengerTypeID3 INT
-SET @PassengerTypeID3 = (SELECT RAND() * 20 + 1)
+DECLARE @PassengerTypeID3 INT, @PassengerTypeCount3 INT
+SET @PassengerTypeCount3 = (SELECT COUNT(*) FROM tblPASSENGER_TYPE)
+SET @PassengerTypeID3 = (SELECT RAND() * @PassengerTypeCount3 + 1)
 INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFName, PassengerLName, PassengerDOB, PassengerAddress, PassengerCity, PassengerState, PassengerZIP)
 SELECT @PassengerTypeID3, CustomerFname, CustomerLname, DateOfBirth, CustomerAddress, CustomerState, CustomerCity, CustomerZip
 FROM PEEPS.dbo.tblCUSTOMER
 
 SELECT * FROM tblPASSENGER
+
