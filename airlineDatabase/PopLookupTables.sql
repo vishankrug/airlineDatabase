@@ -36,7 +36,7 @@ VALUES('First', 'Generally the most expensive and most comfortable accommodation
 INSERT INTO tblMAINTENANCE (MaintenanceName, MaintenanceTypeID)
 VALUES('Lubrication', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'A Check')),
       ('EmergencyEquipmentCheck', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'A Check')), 
-      ('CabinUpdate', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'B Check')), 
+      -- ('CabinUpdate', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'B Check')), 
       ('EngineRemoval', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'D Check')),
       ('WheelInvestigation', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'Line Maintenance')),
       ('BrakeInvestigation', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'Line Maintenance')),
@@ -48,3 +48,26 @@ FROM tblMAINTENANCE_TYPE
 
 SELECT *
 FROM tblMAINTENANCE
+
+--Vishank--
+
+INSERT INTO tblPASSENGER_TYPE(PassengerTypeName, PassengerTypeDescr)
+VALUES ('Normal', ''),
+      ('VIP', ''),
+      ('Unaccompanied Children', ''),
+      ('Pregnant Woman', ''),
+      ('Infant', ''),
+      ('Sight Impaired', ''),
+      ('Hearing Impaired', ''),
+      ('Criminal/Suspect', ''),
+      ('Diplomatic couriers', ''),
+      ('Disabled', '')
+
+INSERT INTO tblLUGGAGE_TYPE(LuggageTypeName, LuggageTypeDescription)
+VALUES ('Normal', ''),
+      ('Animal', ''),
+      ('Overweight', ''),
+      ('Fragile', ''),
+      ('Medical', ''),
+      ('Musical Instruments', ''),
+      ('Sporting Equipment', '')

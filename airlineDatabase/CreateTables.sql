@@ -53,8 +53,8 @@ GO
 CREATE TABLE tblPASSENGER(
     PassengerID INT IDENTITY(1,1) primary key,
     PassengerTypeID INT FOREIGN KEY REFERENCES tblPASSENGER_TYPE(PassengerTypeID) not null,
-    PassengerFname varchar(30) not null,
-    PassengerLname varchar(30) not null,
+    PassengerFname varchar(255) not null,
+    PassengerLname varchar(255) not null,
     PassengerDOB Date,
     PassengerAddress varchar(255) not null,
     PassengerCity varchar(255) not null,
