@@ -23,7 +23,6 @@ CREATE OR ALTER PROCEDURE getPassengerTypeID
 @PassengerTypeID INT OUTPUT --all parameters but one is an output parameter
 AS
 SET @PassengerTypeID = (SELECT PassengerTypeID FROM tblPASSENGER_TYPE WHERE PassengerTypeName = @PassengerTypeName1)
-GO
 
 
 DECLARE @PassengerTypeID3 INT, @PassengerTypeCount3 INT
@@ -34,4 +33,4 @@ SELECT @PassengerTypeID3, CustomerFname, CustomerLname, DateOfBirth, CustomerAdd
 FROM PEEPS.dbo.tblCUSTOMER
 
 SELECT * FROM tblPASSENGER
-GO
+

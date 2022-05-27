@@ -62,6 +62,7 @@ VALUES ('Normal', ''),
       ('Criminal/Suspect', ''),
       ('Diplomatic couriers', ''),
       ('Disabled', '')
+GO
 
 INSERT INTO tblLUGGAGE_TYPE(LuggageTypeName, LuggageTypeDescription)
 VALUES ('Normal', ''),
@@ -71,3 +72,29 @@ VALUES ('Normal', ''),
       ('Medical', ''),
       ('Musical Instruments', ''),
       ('Sporting Equipment', '')
+GO
+--------------- Brian -----------------------
+
+INSERT INTO tblFLIGHT_TYPE (FlightTypeName, FlightTypeDescr)
+VALUES ('Private', ''),
+		('Public', ''),
+		('Passenger', ''),
+		('Cargo', ''),
+		('Military', ''),
+		('Reccreational', '')
+
+GO
+
+
+INSERT INTO tblAIRPORT_TYPE (AirportTypeName, AirportTypeDescr)
+VALUES ('International', ''),
+		('Domestic', ''),
+		('International', ''),
+		('International', '')
+
+INSERT INTO tblEMPLOYEE_TYPE (EmployeeTypeName, EmployeeTypeDescr)
+VALUES('')
+
+
+SELECT * FROM tblEMPLOYEE_TYPE
+
