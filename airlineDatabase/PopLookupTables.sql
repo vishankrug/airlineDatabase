@@ -96,5 +96,23 @@ INSERT INTO tblEMPLOYEE_TYPE (EmployeeTypeName, EmployeeTypeDescr)
 VALUES('')
 
 
-SELECT * FROM tblEMPLOYEE_TYPE
+-- populate tblROLE -- 
+INSERT INTO tblROLE(RoleName, RoleDescription)
+VALUES('Captain', ' responsible for conducting a final examination of the aircraft and guiding the pilots toward the runway. 
+        Plane captains possess extensive knowledge of their designated aircraft and can determine if there are any last minute discrepancies that should ground the aircraft'),
+        ('Co-Captain', 'acts as the second-in-command under the captain. This means that a co-pilot can often have lower-level responsibilities and can take instructions 
+        immediately from the captain during a fligh'),
+        ('Stewardess', 'responsible for ensuring passengers safety and comfort at all times'),
+        ('Purser', 'oversees the flight attendants by making sure airline passengers are safe and comfortable. A flight purser completes detailed reports and verifies all safety 
+        procedures are followed'),
+        ('Load Master', 'supervising the loading and unloading of cargo, vehicles and people on a variety of aircraft.'),
+        ('Flight Medic', 'transports and transfers patients by aircraft and assesses the extent of an illness or injury to establish and prioritize medical procedures to follow'),
+        ('First Officer', 'works in conjunction with the Captain and ensures safety and efficient operation and management of the aircraft'),
+        ('Second Officers', 'responsible for monitoring and controlling various aircraft systems including fixed-wing and rotary wing. They work in close coordination with the two 
+        pilots during all phases of flight.'),
+        ('Navigator', 'responsible for planning the course that will take an aircraft to a location in the least amount of time without compromising its safety and that of its passengers'),
+        ('Flight Engineer', 'check systems before flight, help develop flight plans, and continue to perform checks while the aircraft is in flight. Their focus is to ensure that there are 
+        no mechanical concerns, and they monitor the engines, mechanical systems and fuel levels during the flight.')
+
+        SELECT * FROM tblROLE
 
