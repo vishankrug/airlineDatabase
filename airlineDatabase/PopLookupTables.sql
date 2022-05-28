@@ -114,5 +114,9 @@ VALUES('Captain', ' responsible for conducting a final examination of the aircra
         ('Flight Engineer', 'check systems before flight, help develop flight plans, and continue to perform checks while the aircraft is in flight. Their focus is to ensure that there are 
         no mechanical concerns, and they monitor the engines, mechanical systems and fuel levels during the flight.')
 
-        SELECT * FROM tblROLE
+-- populate tblEmployeeType -- 
+INSERT INTO tblEMPLOYEE_TYPE(EmployeeTypeName, EmployeeTypeDescr)
+VALUES('Full Time', 'Employee works for a minimum of 40 hours a week'),
+      ('Part Time', 'Employee works under 40 hours a week')
+
 
