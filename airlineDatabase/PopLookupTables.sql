@@ -115,4 +115,9 @@ INSERT INTO tblEMPLOYEE_TYPE(EmployeeTypeName, EmployeeTypeDescr)
 VALUES('Full Time', 'Employee works for a minimum of 40 hours a week'),
       ('Part Time', 'Employee works under 40 hours a week')
 
-
+-- populate ProductType --
+INSERT INTO tblPRODUCT_TYPE(ProductTypeName, ProductTypeDescr)
+VALUES('Beverages', ''),
+      ('Alcohol', 'Should not be sold to anyone under 18'),
+      ('In Flight Meal', 'Pre-determined meals based on destination. Not customizable.'),
+      ('Snacks', 'Food items other than in flight meals')
