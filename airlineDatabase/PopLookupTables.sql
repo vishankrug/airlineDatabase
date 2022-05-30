@@ -92,10 +92,6 @@ VALUES ('International', ''),
 		('International', ''),
 		('International', '')
 
-INSERT INTO tblEMPLOYEE_TYPE (EmployeeTypeName, EmployeeTypeDescr)
-VALUES('')
-
-
 -- populate tblROLE -- 
 INSERT INTO tblROLE(RoleName, RoleDescription)
 VALUES('Captain', ' responsible for conducting a final examination of the aircraft and guiding the pilots toward the runway. 
