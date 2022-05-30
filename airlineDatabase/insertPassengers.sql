@@ -2,14 +2,6 @@ USE INFO_430_Proj_04
 
 GO
 
-CREATE OR ALTER PROCEDURE getProductID
-@ProductName1 varchar(50),
-@ProductID INT OUTPUT --all parameters but one is an output parameter
-AS
-SET @ProductID = (SELECT ProductID FROM tblPRODUCT WHERE ProductName = @ProductName1)
- 
-GO
-
 CREATE OR ALTER PROCEDURE getProductTypeID
 @ProductTypeName1 varchar(50),
 @ProductTypeID INT OUTPUT --all parameters but one is an output parameter
