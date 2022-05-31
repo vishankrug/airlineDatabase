@@ -1,7 +1,7 @@
 Begin Try
 	Use Master;
 	If Exists(Select Name From SysDatabases Where Name = 'INFO_430_Proj_04')
-	 Begin 
+	 Begin
 	  Alter Database [INFO_430_Proj_04] set Single_user With Rollback Immediate;
 	  Drop Database INFO_430_Proj_04;
 	 End
@@ -92,6 +92,7 @@ GO
 CREATE TABLE tblPLANE (
 	PlaneID INT IDENTITY(1,1) Primary Key,
     PlaneTypeID INT FOREIGN KEY REFERENCES tblPLANE_TYPE(PlaneTypeID),
+    PlaneID INT IDENTITY(1,1) PRIMARY KEY,
 	PlaneName VARCHAR(100),
 	ICAO VARCHAR(10),
 	IATA VARCHAR(10),
@@ -166,6 +167,9 @@ CREATE TABLE tblAIRPORT (
 )
 GO
 
+-- ALTER TABLE tblAIRPORT
+-- ADD AirportName VARCHAR(200)
+
 CREATE TABLE tblFLIGHT_TYPE (
     FlightTypeID INT IDENTITY(1,1) PRIMARY KEY,
     FlightTypeName VARCHAR(100),
@@ -207,7 +211,6 @@ CREATE TABLE tblEMPLOYEE_TYPE(
     EmployeeTypeDescr Varchar(200)
 )
 GO
-
 
 CREATE TABLE tblEMPLOYEE (
     EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
