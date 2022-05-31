@@ -28,9 +28,14 @@ SET @PassengerTypeID = (SELECT PassengerTypeID FROM tblPASSENGER_TYPE WHERE Pass
 DECLARE @PassengerTypeID3 INT, @PassengerTypeCount3 INT
 SET @PassengerTypeCount3 = (SELECT COUNT(*) FROM tblPASSENGER_TYPE)
 SET @PassengerTypeID3 = (SELECT RAND() * @PassengerTypeCount3 + 1)
-INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFName, PassengerLName, PassengerDOB, PassengerAddress, PassengerCity, PassengerState, PassengerZIP)
+INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFName, PassengerLName, PassengerDOB, PassengerAddress, PassengerState, PassengerCity, PassengerZIP)
 SELECT @PassengerTypeID3, CustomerFname, CustomerLname, DateOfBirth, CustomerAddress, CustomerState, CustomerCity, CustomerZip
 FROM PEEPS.dbo.tblCUSTOMER
 
 SELECT * FROM tblPASSENGER
 
+
+DELETE FROM tblPASSENGER
+WHERE PassengerID is not null
+
+SELECT * FROM tblCLASS

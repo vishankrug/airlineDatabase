@@ -26,6 +26,13 @@ CREATE TABLE tblPRODUCT_TYPE(
 )
 GO
 
+--ALTER TABLE tblProduct
+--DROP COLUMN ProductName, ProductPrice
+
+--ALTER TABLE tblProduct
+--ADD ProductName varchar(100)
+--, ProductPrice numeric(8,2)
+
 CREATE TABLE tblPRODUCT(
     ProductID INT IDENTITY(1,1) primary key,
     ProductTypeID INT FOREIGN KEY REFERENCES tblPRODUCT_TYPE(ProductTypeID) not null,
@@ -144,6 +151,7 @@ CREATE TABLE tblCOUNTRY (
 )
 GO
 
+
 CREATE TABLE tblCITY (
     CityID INT IDENTITY(1,1) PRIMARY KEY,
     CountryID INT FOREIGN KEY REFERENCES tblCOUNTRY(CountryID),
@@ -157,6 +165,9 @@ CREATE TABLE tblAIRPORT_TYPE (
     AirportTypeDescr VARCHAR(50)
 )
 GO
+
+ALTER TABLE tblAIRPORT
+ADD AirportName VARCHAR(200)
 
 CREATE TABLE tblAIRPORT (
     AirportID INT IDENTITY(1,1) PRIMARY KEY,
