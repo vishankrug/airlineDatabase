@@ -14,8 +14,8 @@ GO
 SELECT * FROM tblCLASS
 GO
 
-SELECT MAX(PlaneID), COUNT(*)         -- if these match, then there are no gaps
-FROM tblPLANE 
+SELECT MAX(SeatID), COUNT(*)         -- if these match, then there are no gaps
+FROM tblSeat 
 GO
 
 CREATE PROCEDURE getPlaneID
@@ -119,6 +119,8 @@ SELECT DISTINCT SeatName
 FROM tblSEAT
 GO
 
+
+-- deletes duplicates
 WITH CTE_distictSeat AS (
     SELECT 
 		SeatID,

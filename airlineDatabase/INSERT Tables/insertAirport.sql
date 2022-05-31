@@ -37,7 +37,7 @@ SELECT DISTINCT REGION
 FROM airport_data$
 GO
 
--- insert tblCOUNTRY
+----------------------------- insert tblCOUNTRY-----------------------------
 INSERT INTO tblCOUNTRY (RegionID, CountryName)
 SELECT DISTINCT R.RegionID, iso_country
 FROM airport_data$ A
@@ -45,7 +45,7 @@ FROM airport_data$ A
 GO
 
 
--- insert tblCITY
+----------------------------- insert tblCITY----------------------------
 
 INSERT INTO tblCITY (CountryID, CityName)
 SELECT DISTINCT C.CountryID, A.CITY
@@ -56,64 +56,29 @@ WHERE A.CITY is not null
 GO
 
 
--- insert tblAIRPORT_TYPE AND tblAIRPORT
-
-DELETE FROM tblAIRPORT_TYPE
-WHERE AirportTypeID is not null
-
-
-DECLARE @AT_ID INT
-BEGIN TRANSACTION T1
+--------------------- insert tblAIRPORT_TYPE-----------------------------
 INSERT INTO tblAIRPORT_TYPE (AirportTypeName)
-SELECT DISTINCT type
+SELECT DISTINCT [type]
 FROM airport_data$
-SET @AT_ID = SCOPE_IDENTITY()
-
-IF @@ERROR <> 0
-	BEGIN
-		ROLLBACK TRANSACTION T1
-	END
-
-	ELSE 
-		BEGIN TRANSACTION T2
-
-		INSERT INTO tblAIRPORT (AirportTypeID, CityID, AirportName)
-		SELECT DISTINCT @AT_ID, CI.CityID, A.[name]
-		FROM airport_data$ A
-			JOIN tblREGION R on A.REGION = R.RegionName
-			JOIN tblCOUNTRY C on R.RegionID = C.RegionID
-			JOIN tblCITY CI on C.CountryID = CI.CountryID
-		WHERE A.CITY is not null
-
-		IF @@ERROR <> 0
-            BEGIN
-                PRINT('Error, cannot insert into Order_Product')
-                ROLLBACK TRANSACTION T2
-            END
-        ELSE
-			COMMIT TRANSACTION T2
-            COMMIT TRANSACTION T1
+GO
 
 
 
+---------------------INSERT tblAIRPORT --------------------------
+INSERT INTO tblAIRPORT (AirportTypeID, CityID, AirportName)
+SELECT DISTINCT AIT.AirportTypeID, C.CityID, A.[name]
+FROM airport_data$ A
+	JOIN tblAIRPORT_TYPE AIT on A.[type] = AIT.AirportTypeName
+	JOIN tblCITY C on A.CITY = C.CityName
+WHERE A.[name] is not null
 
-SELECT COUNT(AirportID)
-FROM tblAIRPORT
 
 SELECT *
-FROM tblAIRPORT_TYPE
-
-
-SELECT DISTINCT CI.CityID, A.[name]
-FROM airport_data$ A
-	JOIN tblREGION R on A.REGION = R.RegionName
-	JOIN tblCOUNTRY C on R.RegionID = C.RegionID
-	JOIN tblCITY CI on C.CountryID = CI.CountryID
-
-
-SELECT DISTINCT AirportName
 FROM tblAIRPORT
 
-UPDATE tblAIRPORT
-SET AirportName = AirportName..
-WHERE DISTINCT AirportName;
+--------------------------------------------------------------------
+DELETE FROM tblAIRPORT
+WHERE CityID is not null
+
+DBCC CHECKIDENT ('[tblCITY]', RESEED, 0);
+GO

@@ -38,7 +38,8 @@ CREATE OR ALTER PROCEDURE populateBookingTable
 @SeatName2 varchar(10)
 
 AS
-DECLARE @SeatID1 INT, @PassengerID1 INT, @RouteID1 INT
+DECLARE @SeatID1 INT, @PassengerID1 INT, @RouteID1 INT, @SeatID4 INT, @SeatName4 INT
+DECLARE @S_RowCount INT = (SELECT COUNT(*) FROM tblSEAT)
 
 EXEC getRouteID
 @RouteName1 = @RouteName2,
@@ -68,8 +69,16 @@ EXEC getSeatID
 
 IF @SeatID1 IS NULL
    BEGIN
-       PRINT 'Error found';
-       THROW 54667, '@SeatID1 cannot be null, process is terminated', 1;
+		WHILE @SeatID1 IS NULL 
+			SET @SeatID1 = (SELECT RAND() * @S_RowCount + 1)
+			SET @SeatName4 = (SELECT SeatName FROM tblSEAT WHERE SeatID = @SeatID1)
+
+			EXEC getSeatID
+			@SeatName1 = @SeatName2,
+			@SeatID = @SeatID1 OUTPUT
+		
+       --PRINT 'Error found';
+       --THROW 54667, '@SeatID1 cannot be null, process is terminated', 1;
    END
 
 BEGIN TRANSACTION T1

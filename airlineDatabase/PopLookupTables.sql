@@ -43,11 +43,11 @@ VALUES('Lubrication', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE M
       ('FluidLevelInvestigation', (SELECT MaintenanceTypeID FROM tblMAINTENANCE_TYPE WHERE MaintenanceTypeName = 'Line Maintenance'))
 GO
 
-SELECT *
-FROM tblMAINTENANCE_TYPE
+--SELECT *
+--FROM tblMAINTENANCE_TYPE
 
-SELECT *
-FROM tblMAINTENANCE
+--SELECT *
+--FROM tblMAINTENANCE
 
 --Vishank--
 
@@ -108,10 +108,3 @@ VALUES('Captain', ' responsible for conducting a final examination of the aircra
 INSERT INTO tblEMPLOYEE_TYPE(EmployeeTypeName, EmployeeTypeDescr)
 VALUES('Full Time', 'Employee works for a minimum of 40 hours a week'),
       ('Part Time', 'Employee works under 40 hours a week')
-
--- populate ProductType --
-INSERT INTO tblPRODUCT_TYPE(ProductTypeName, ProductTypeDescr)
-VALUES('Beverages', ''),
-      ('Alcohol', 'Should not be sold to anyone under 18'),
-      ('In Flight Meal', 'Pre-determined meals based on destination. Not customizable.'),
-      ('Snacks', 'Food items other than in flight meals')
