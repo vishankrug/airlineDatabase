@@ -121,4 +121,6 @@ GO
 
 
 EXEC populateBooking_wrapper
-@RUN = 10000
+@RUN = 100
+
+SELECT * FROM tblROUTE

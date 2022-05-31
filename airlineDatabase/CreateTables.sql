@@ -1,7 +1,7 @@
 Begin Try
 	Use Master;
 	If Exists(Select Name From SysDatabases Where Name = 'INFO_430_Proj_04')
-	 Begin 
+	 Begin
 	  Alter Database [INFO_430_Proj_04] set Single_user With Rollback Immediate;
 	  Drop Database INFO_430_Proj_04;
 	 End
@@ -14,29 +14,20 @@ go
 
 Use INFO_430_Proj_04;
 
-
-
 --------------------LOOK UP TABLES---------------------------------------
 
 CREATE TABLE tblPRODUCT_TYPE(
     ProductTypeID INT IDENTITY(1,1) primary key,
-    ProductTypeName varchar(50),
+    ProductTypeName varchar(100),
     ProductTypeDescr varchar(255)
 )
 GO
 
---ALTER TABLE tblProduct
---DROP COLUMN ProductName, ProductPrice
-
---ALTER TABLE tblProduct
---ADD ProductName varchar(100)
---, ProductPrice numeric(8,2)
-
 CREATE TABLE tblPRODUCT(
     ProductID INT IDENTITY(1,1) primary key,
     ProductTypeID INT FOREIGN KEY REFERENCES tblPRODUCT_TYPE(ProductTypeID) not null,
-    ProductName varchar(50) not null,
-    ProductPrice Money not null
+    ProductName varchar(100) not null,
+    ProductPrice numeric(8,2) not null
 )
 GO
 
@@ -64,14 +55,14 @@ CREATE TABLE tblPASSENGER(
     PassengerDOB Date,
     PassengerAddress varchar(255) not null,
     PassengerCity varchar(255) not null,
-    PassengerState varchar(50),
+    PassengerState varchar(100),
     PassengerZIP varchar(50) not null
 )
 GO
 
 CREATE TABLE tblLUGGAGE_TYPE(
     LuggageTypeID INT IDENTITY(1,1) primary key,
-    LuggageTypeName varchar(50) not null,
+    LuggageTypeName varchar(100) not null,
     LuggageTypeDescription varchar(255)
 )
 GO
@@ -99,12 +90,13 @@ CREATE TABLE tblPLANE_TYPE (
 GO
 
 CREATE TABLE tblPLANE (
+	PlaneID INT IDENTITY(1,1) Primary Key,
     PlaneTypeID INT FOREIGN KEY REFERENCES tblPLANE_TYPE(PlaneTypeID),
     PlaneID INT IDENTITY(1,1) PRIMARY KEY,
 	PlaneName VARCHAR(100),
 	ICAO VARCHAR(10),
 	IATA VARCHAR(10),
-	ModelOrigin VARCHAR(50),
+	ModelOrigin VARCHAR(100),
 	SeatCount INT
 )
 GO
@@ -139,14 +131,14 @@ GO
 
 CREATE TABLE tblREGION (
     RegionID INT IDENTITY(1,1) PRIMARY KEY,
-    RegionName VARCHAR(50)
+    RegionName VARCHAR(100)
 )
 GO
 
 CREATE TABLE tblCOUNTRY (
     CountryID INT IDENTITY(1,1) PRIMARY KEY,
     RegionID INT FOREIGN KEY REFERENCES tblREGION(RegionID),
-    CountryName VARCHAR(50),
+    CountryName VARCHAR(100),
     CountryCode VARCHAR(10)
 )
 GO
@@ -155,17 +147,16 @@ GO
 CREATE TABLE tblCITY (
     CityID INT IDENTITY(1,1) PRIMARY KEY,
     CountryID INT FOREIGN KEY REFERENCES tblCOUNTRY(CountryID),
-    CityName VARCHAR(50)
+    CityName VARCHAR(100)
 )
 GO
 
 CREATE TABLE tblAIRPORT_TYPE (
     AirportTypeID INT IDENTITY(1,1) PRIMARY KEY,
-    AirportTypeName VARCHAR(50),
-    AirportTypeDescr VARCHAR(50)
+    AirportTypeName VARCHAR(100),
+    AirportTypeDescr VARCHAR(100)
 )
 GO
-
 
 
 CREATE TABLE tblAIRPORT (
@@ -181,7 +172,7 @@ GO
 
 CREATE TABLE tblFLIGHT_TYPE (
     FlightTypeID INT IDENTITY(1,1) PRIMARY KEY,
-    FlightTypeName VARCHAR(50),
+    FlightTypeName VARCHAR(100),
     FlightTypeDescr VARCHAR(100)
 )
 GO
@@ -191,10 +182,10 @@ CREATE TABLE tblFLIGHT (
     FlightTypeID INT FOREIGN KEY REFERENCES tblFLIGHT_TYPE(FlightTypeID),
     ArrivalID INT FOREIGN KEY REFERENCES tblAIRPORT(AirportID),
     DepartureID INT FOREIGN KEY REFERENCES tblAIRPORT(AirportID),
-    FlightName VARCHAR(50),
+    FlightName VARCHAR(100),
     ArrivalTime VARCHAR(50),
     DepartureTime VARCHAR(50),
-    Miles VARCHAR(50)
+    Miles INT
 )
 GO
 
@@ -216,7 +207,7 @@ GO
 
 CREATE TABLE tblEMPLOYEE_TYPE(
     EmployeeTypeID INT IDENTITY(1,1) PRIMARY KEY,
-    EmployeeTypeName Varchar(50),
+    EmployeeTypeName Varchar(100),
     EmployeeTypeDescr Varchar(200)
 )
 GO
@@ -224,8 +215,8 @@ GO
 CREATE TABLE tblEMPLOYEE (
     EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
     EmployeeTypeID INT FOREIGN KEY REFERENCES tblEMPLOYEE_TYPE(EmployeeTypeID),
-    FName VARCHAR(30),
-    LNAME VARCHAR(30),
+    FName VARCHAR(100),
+    LNAME VARCHAR(100),
     DateOfBirth DATE,
     StartDate DATE,
     EndDate DATE
@@ -234,11 +225,10 @@ GO
 
 CREATE TABLE tblROLE (
     RoleID INT IDENTITY(1,1) PRIMARY KEY,
-    RoleName VARCHAR(30),
+    RoleName VARCHAR(100),
     RoleDescription VARCHAR(900)
 )
 GO
-
 
 CREATE TABLE tblEMPLOYEE_FLIGHT(
     EmployeeFlightID INT IDENTITY(1,1) PRIMARY KEY,
@@ -271,5 +261,6 @@ CREATE TABLE tblLUGGAGE(
     LuggageTypeID INT FOREIGN KEY REFERENCES tblLUGGAGE_TYPE(LuggageTypeID) not null
 )
 GO
+
 
 BACKUP DATABASE INFO_430_Proj_04 TO DISK = 'C:\SQL\INFO_430_Proj_04.BAK'
