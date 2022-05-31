@@ -86,12 +86,6 @@ VALUES ('Private', ''),
 GO
 
 
-INSERT INTO tblAIRPORT_TYPE (AirportTypeName, AirportTypeDescr)
-VALUES ('International', ''),
-		('Domestic', ''),
-		('International', ''),
-		('International', '')
-
 -- populate tblROLE -- 
 INSERT INTO tblROLE(RoleName, RoleDescription)
 VALUES('Captain', ' responsible for conducting a final examination of the aircraft and guiding the pilots toward the runway. 
