@@ -85,7 +85,7 @@ WHILE @RUN > 0
 GO
 
 EXEC populatePassengerWrapper
-@RUN = 500
+@RUN = 10000
 
 SELECT * FROM tblPASSENGER
 
