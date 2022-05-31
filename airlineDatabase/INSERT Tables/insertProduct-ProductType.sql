@@ -11,16 +11,16 @@ SELECT * FROM tblPRODUCT
 DELETE FROM tblPRODUCT_TYPE
 WHERE ProductTypeID is not null
 
-SELECT * FROM food$
+SELECT * FROM Sheet1$
 
 
 INSERT INTO tblPRODUCT_TYPE(ProductTypeName)
 SELECT DISTINCT ProductTypeName
-FROM food$
+FROM Sheet1$
 GO
 
 
 INSERT INTO tblPRODUCT(ProductTypeID, ProductName, ProductPrice)
 SELECT DISTINCT PT.ProductTypeID, F.ProductName, F.Price
-FROM food$ F
+FROM Sheet1$ F
 	JOIN tblPRODUCT_TYPE PT on F.ProductTypeName = PT.ProductTypeName

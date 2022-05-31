@@ -17,12 +17,12 @@ CREATE TABLE planesSeatsDataPK (
 
 INSERT INTO planesSeatsDataPK (PlaneName, ICAO, IATA, Seats, CountryOrigin)
 
-(SELECT PlaneName, ICAO, IATA, NumSeats, CountryOrigin
+(SELECT PlaneName, ICAO, IATA, Seats, CountryOrigin
 FROM planeSeat$
 WHERE PlaneName is not null
 AND ICAO is not null
 AND IATA is not null
-AND NumSeats is not null
+AND Seats is not null
 AND CountryOrigin is not null)
 
 
@@ -30,7 +30,7 @@ SELECT *
 FROM planesSeatsDataPK
 GO
 
-CREATE PROCEDURE getPlaneID
+CREATE OR ALTER PROCEDURE getPlaneID
 @PlaneName Varchar(100),
 @P_ID INT OUTPUT
 AS
@@ -65,10 +65,3 @@ FROM planesSeatsDataPK
 
 SELECT *
 FROM tblPLANE
-
-
-
-
-
-SELECT *
-FROM tblCLASS
