@@ -23,95 +23,83 @@ CREATE OR ALTER PROCEDURE getPassengerTypeID
 @PassengerTypeID INT OUTPUT --all parameters but one is an output parameter
 AS
 SET @PassengerTypeID = (SELECT PassengerTypeID FROM tblPASSENGER_TYPE WHERE PassengerTypeName = @PassengerTypeName1)
+
 GO
 
+CREATE PROCEDURE populatePassenger
+@PassengerTypeID3 INT,
+@PassengerFName3 varchar(100),
+@PassengerLName3 varchar(100),
+@PassengerDOB3 Date,
+@PassengerAddress3 varchar(255),
+@PassengerCity3 varchar(255),
+@PassengerState3 varchar(50),
+@PassengerZIP3 varchar(50)
 
-CREATE TABLE PassengerPK (
-PassengerID INT IDENTITY(1,1) primary key.
-PassengerFname varchar(100),
-PassengerLname varchar(100)
-)
-
-
-
-CREATE PROCEDURE getPassengerID
-@PFname varchar(50),
-@PLname varchar(50),
-@PDOB date,
-@P_ID
 AS
 
-SET @P_ID = (SELECT CustomerID FROM PEEPS.dbo WHERE Custom)
+BEGIN TRANSACTION T1
+INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFname, PassengerLname, PassengerDOB, PassengerAddress, PassengerCity, PassengerState, PassengerZIP)
+VALUES (@PassengerTypeID3, @PassengerFName3, @PassengerLName3, @PassengerDOB3, @PassengerAddress3, @PassengerCity3, @PassengerState3, @PassengerZIP3)
+COMMIT TRANSACTION T1 
+
+GO
+CREATE PROCEDURE populatePassengerWrapper
+@RUN INT
+AS DECLARE @PassengerFName4 varchar(100), @PassengerLName4 varchar(100), @PassengerDOB4 DATE, @PassengerAddress4 varchar(255), @PassengerCity4 varchar(255), 
+            @PassengerState4 varchar(50), @PassengerZIP4 varchar(50)
+
+DECLARE @C_RowCount INT = (SELECT COUNT(*) FROM PEEPS.dbo.tblCUSTOMER)
+
+DECLARE @PassengerTypeID4 INT, @PassengerTypeCount INT, @CustomerID4 INT
+
+SET @PassengerTypeCount = (SELECT COUNT(*) FROM tblPASSENGER_TYPE)
+
+WHILE @RUN > 0
+    BEGIN
+        SET @PassengerTypeID4 = (SELECT RAND() * @PassengerTypeCount + 1)
+        SET @CustomerID4 = (SELECT RAND() * @C_RowCount + 1)
+
+        SET @PassengerFName4 = (SELECT CustomerFname FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerLName4 = (SELECT CustomerLname FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerDOB4 = (SELECT DateOfBirth FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerAddress4 = (SELECT CustomerAddress FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerCity4 = (SELECT CustomerState FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerState4 = (SELECT CustomerCity FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerZIP4 = (SELECT CustomerZip FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+
+        EXEC populatePassenger
+            @PassengerTypeID3 = @PassengerTypeID4,
+            @PassengerFName3 = @PassengerFName4,
+            @PassengerLName3 = @PassengerLName4,
+            @PassengerDOB3 = @PassengerDOB4,
+            @PassengerAddress3 = @PassengerAddress4,
+            @PassengerCity3 = @PassengerCity4,
+            @PassengerState3 = @PassengerState4,
+            @PassengerZIP3 = @PassengerZIP4
+
+        SET @RUN = @RUN - 1
 
 
-
-INSERT INTO tblPASSENGER
-
-
-
-
-
-
-
-
-
-DECLARE @PassengerTypeID3 INT, @PassengerTypeCount3 INT
-DECLARE @CountRow INT
-
-SET @CountRow = (SELECT COUNT(*) FROM PEEPS.dbo.tblCUSTOMER)
-
-WHILE @CountRow > 0 (
-
-
-
-@CountRow = @CountRow - 1
-)
-
-SELECT TOP 100000 CustomerFname, CustomerLname, DateOfBirth, CustomerAddress, CustomerState, CustomerCity, CustomerZip
-INTO tempPassenger
-FROM PEEPS.dbo.tblCUSTOMER
-
-SELECT * 
-FROM tempPassenger
-
-
-CREATE PROCEDURE popPassenger
-@fname varchar(100),
-@lname varchar(100),
-@dob varchar(100),
-@pt_name varchar(100)
-AS
-
-DECLARE @PT_ID INT, @P_ID INT
-
-EXEC getPassengerTypeID
-@PassengerTypeName1 = @pt_name,
-@PassengerTypeID =@PT_ID OUTPUT
-
-
-
-
-
-
-
-
-
-
-
-SET @PassengerTypeCount3 = (SELECT COUNT(*) FROM tblPASSENGER_TYPE)
-SET @PassengerTypeID3 = (SELECT RAND() * @PassengerTypeCount3 + 1)
-INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFName, PassengerLName, PassengerDOB, PassengerAddress, PassengerState, PassengerCity, PassengerZIP)
-SELECT @PassengerTypeID3, CustomerFname, CustomerLname, DateOfBirth, CustomerAddress, CustomerState, CustomerCity, CustomerZip
-FROM PEEPS.dbo.tblCUSTOMER
+    END
 GO
 
-SELECT * 
-FROM tblPASSENGER_TYPE PT
-	JOIN PEEPS.dbo.tblCUSTOMER C on 
-
+EXEC populatePassengerWrapper
+@RUN = 500
 
 SELECT * FROM tblPASSENGER
 
+-- DECLARE @PassengerTypeID3 INT, @PassengerTypeCount3 INT
+-- SET @PassengerTypeCount3 = (SELECT COUNT(*) FROM tblPASSENGER_TYPE)
+-- SET @PassengerTypeID3 = (SELECT RAND() * @PassengerTypeCount3 + 1)
+-- INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFName, PassengerLName, PassengerDOB, PassengerAddress, PassengerState, PassengerCity, PassengerZIP)
+-- SELECT (SELECT RAND() * @PassengerTypeCount3 + 1), CustomerFname, CustomerLname, DateOfBirth, CustomerAddress, CustomerState, CustomerCity, CustomerZip
+-- FROM PEEPS.dbo.tblCUSTOMER
 
-DELETE FROM tblPASSENGER
-WHERE PassengerID is not null
+-- SELECT * FROM PEEPS.dbo.tblCUSTOMER
+
+
+-- DELETE FROM tblPASSENGER
+-- WHERE PassengerID is not null
+
+-- SELECT * FROM tblCLASS
