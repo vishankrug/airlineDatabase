@@ -163,14 +163,23 @@ CREATE TABLE tblFLIGHT_TYPE (
 )
 GO
 
+-- ALTER TABLE tblFLIGHT
+-- ALTER COLUMN ArrivalTime datetime
+
+-- ALTER TABLE tblFLIGHT
+-- ALTER COLUMN DepartureTime datetime
+
+-- ALTER TABLE tblFLIGHT
+-- ALTER COLUMN FlightName varchar(255)
+
 CREATE TABLE tblFLIGHT (
     FlightID INT IDENTITY(1,1) PRIMARY KEY,
     FlightTypeID INT FOREIGN KEY REFERENCES tblFLIGHT_TYPE(FlightTypeID),
     ArrivalID INT FOREIGN KEY REFERENCES tblAIRPORT(AirportID),
     DepartureID INT FOREIGN KEY REFERENCES tblAIRPORT(AirportID),
-    FlightName VARCHAR(100),
-    ArrivalTime VARCHAR(50),
-    DepartureTime VARCHAR(50),
+    FlightName VARCHAR(255),
+    ArrivalTime datetime,
+    DepartureTime datetime,
     Miles INT
 )
 GO

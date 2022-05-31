@@ -5,7 +5,7 @@ CREATE PROCEDURE insert_into_flights
 @RUN INT
 AS
 
-DECLARE @ArrivalID2 INT, @DepartureID2 INT, @Miles2 INT, @FlightName2 INT, @FlightType2 INT, @DepartureTime2 datetime, @ArrivalTime2 datetime, @RandomHours INT
+DECLARE @ArrivalID2 INT, @DepartureID2 INT, @Miles2 INT, @FlightName2 varchar(255), @FlightType2 INT, @DepartureTime2 datetime, @ArrivalTime2 datetime, @RandomHours INT
 
 DECLARE @AirportCount INT = (SELECT COUNT(*) FROM tblAIRPORT)
 
@@ -41,4 +41,6 @@ BEGIN
 GO
 
 EXEC insert_into_flights
-@RUN = 10000
+@RUN = 5000
+
+SELECT * FROM tblFLIGHT
