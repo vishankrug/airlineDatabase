@@ -18,7 +18,7 @@ CREATE OR ALTER PROCEDURE getPassengerID
 @PassengerDOB1 Date,
 @PassengerID INT OUTPUT --all parameters but one is an output parameter
 AS
-SET @PassengerID = (SELECT PassengerID FROM tblPASSENGER WHERE PassengerFName = @PassengerFName1 AND PassengerLName = @PassengerLName1 AND PassengerDOB = @PassengerDOB1)
+SET @PassengerID = (SELECT PassengerID FROM tblPASSENGER WHERE PassengerFName = @PassengerFname1 AND PassengerLname = @PassengerLName1 AND PassengerDOB = @PassengerDOB1)
  
 GO
 
@@ -30,7 +30,7 @@ SET @SeatID = (SELECT SeatID FROM tblSEAT WHERE SeatName = @SeatName1)
  
 GO
 
-CREATE PROCEDURE populateBookingTable
+CREATE OR ALTER PROCEDURE populateBookingTable
 @RouteName2 varchar(50),
 @PassengerFName2 varchar(255),
 @PassengerLName2 varchar(255),
@@ -84,7 +84,7 @@ COMMIT TRANSACTION T1
 
 GO
 
-CREATE PROCEDURE populateBooking_wrapper
+CREATE OR ALTER PROCEDURE populateBooking_wrapper
 @RUN INT
 AS
 DECLARE @PassengerFName3 varchar(255), @PassengerLName3 varchar(255), @PassengerDOB3 Date, @RouteName3 varchar(50), @SeatName3 varchar(10)
@@ -120,7 +120,20 @@ WHILE @RUN > 0
 GO
 
 
-EXEC populateBooking_wrapper
-@RUN = 100
+EXEC populateBookingTable
+@RouteName2 = "ASF-KZN",
+@PassengerFName2 = "Jonah",
+@PassengerLName2 = "Sumi",
+@PassengerDOB2 = "1970-07-04",
+@SeatName2 = "242"
 
+EXEC populateBooking_wrapper
+@RUN = 10000
+
+
+SELECT * FROM tblBOOKING
 SELECT * FROM tblROUTE
+
+SELECT * FROM tblSEAT
+
+SELECT * FROM tblPASSENGER

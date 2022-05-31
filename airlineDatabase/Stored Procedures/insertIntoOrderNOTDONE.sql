@@ -10,6 +10,17 @@ SET @ProductID = (SELECT ProductID FROM tblPRODUCT WHERE ProductName = @ProductN
  
 GO
 
+
+CREATE OR ALTER PROCEDURE getBookingID
+@BookingName varchar(50),
+@ProductID INT OUTPUT --all parameters but one is an output parameter
+AS
+SET @ProductID = (SELECT ProductID FROM tblPRODUCT WHERE ProductName = @ProductName1)
+ 
+GO
+
+
+
 CREATE PROCEDURE insert_order_product
 @OrderDate2 Date,
 @Quantity2 INT

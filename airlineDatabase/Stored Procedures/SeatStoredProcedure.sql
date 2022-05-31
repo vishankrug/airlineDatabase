@@ -14,6 +14,10 @@ GO
 SELECT * FROM tblCLASS
 GO
 
+SELECT MAX(PlaneID), COUNT(*)         -- if these match, then there are no gaps
+FROM tblPLANE 
+GO
+
 CREATE PROCEDURE getPlaneID
 @PlaneName VARCHAR(50),
 @ICAO VARCHAR(50),
@@ -40,18 +44,18 @@ AS
 
 DECLARE @P_ID INT, @CL_ID INT, @SeatName INT
 
-SET @SeatName = (SELECT FLOOR(RAND()*(300-100+1))+100)
+SET @SeatName = (SELECT FLOOR(RAND()*(1000000-100+1))+100)
 
 EXEC getPlaneID
 @PlaneName = @Pname,
 @ICAO = @ICAO1,
 @Plane_ID = @P_ID OUTPUT
 
-IF @P_ID IS NULL
-	BEGIN
-		PRINT 'hey @P_ID is NULL...';
-		THROW 55656, '@P_ID cannot be null; process is terminating', 1;
-	END
+--IF @P_ID IS NULL
+--	BEGIN
+--		PRINT 'hey @P_ID is NULL...';
+--		THROW 55656, '@P_ID cannot be null; process is terminating', 1;
+--	END
 
 EXEC getClassID
 @CName = @CName1,
@@ -68,6 +72,8 @@ IF @@ERROR <> 0
 ELSE
 	COMMIT TRANSACTION T1
 GO
+
+
 
 
 CREATE OR ALTER PROCEDURE wrapper_popSEAT
@@ -98,10 +104,35 @@ WHILE @RUN > 0
 GO
 
 EXEC wrapper_popSEAT
-@RUN = 100
+@RUN = 10000
 
 SELECT * FROM tblSEAT
 
 
 DELETE FROM tblSEAT 
-WHERE PlaneID is not null
+WHERE PlaneID is null
+
+DBCC CHECKIDENT ('[tblSEAT]', RESEED, 0);
+GO
+
+SELECT DISTINCT SeatName
+FROM tblSEAT
+GO
+
+WITH CTE_distictSeat AS (
+    SELECT 
+		SeatID,
+        ClassID,
+		PlaneID,
+		SeatName,
+        ROW_NUMBER() OVER (
+            PARTITION BY 
+                SeatName
+            ORDER BY 
+                SeatName
+        ) AS row_num
+     FROM 
+        tblSEAT
+)
+DELETE FROM CTE_distictSeat
+WHERE row_num > 1;
