@@ -5,11 +5,11 @@ GO
 
 -- How many miles passengers have traveled (total miles traveled) in tblPASSENGER
 
-CREATE FUNCTION totalMilesTravelledByPassenger(@PK INT)
+CREATE OR ALTER FUNCTION totalMilesTravelledByPassenger(@PK INT)
     RETURNS INT
     AS BEGIN
         DECLARE @RET INT = (
-            SELECT P.PassengerID, SUM(F.Miles) as TotalMilesTravelled
+            SELECT SUM(F.Miles) as TotalMilesTravelled
             FROM tblPASSENGER P
             JOIN tblBOOKING B ON P.PassengerID = B.PassengerID
             JOIN tblROUTE R ON B.RouteID = R.RouteID
@@ -23,4 +23,6 @@ CREATE FUNCTION totalMilesTravelledByPassenger(@PK INT)
 GO
 
 ALTER TABLE tblPASSENGER
-ADD totalMilesTravelledByPassenger AS (dbo.totalMilesTravelledByPassenger(P.PassengerID))
+ADD totalMilesTravelledByPassenger AS (dbo.totalMilesTravelledByPassenger(PassengerID))
+
+SELECT * FROM tblPASSENGER
