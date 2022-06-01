@@ -115,6 +115,10 @@ WHILE @RUN > 0
         SET @PassengerDOB3 = (SELECT PassengerDOB FROM tblPASSENGER WHERE PassengerID = @PassengerID3)
         SET @RouteName3 = (SELECT RouteName FROM tblROUTE WHERE RouteID = @RouteID3)
         SET @SeatName3 = (SELECT SeatName FROM tblSEAT WHERE SeatID = @SeatID3)
+        -- PRINT(@SeatID3)
+        -- PRINT(@SeatName3)
+        -- PRINT(@RouteID3)
+        -- PRINT(@RouteName3)
 
         EXEC populateBookingTable
         @RouteName2 = @RouteName3,
@@ -137,7 +141,7 @@ EXEC populateBookingTable
 @SeatName2 = "242"
 
 EXEC populateBooking_wrapper
-@RUN = 10000
+@RUN = 500
 
 
 SELECT * FROM tblBOOKING
