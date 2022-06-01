@@ -11,6 +11,15 @@ SELECT * FROM tblPRODUCT
 DELETE FROM tblPRODUCT_TYPE
 WHERE ProductTypeID is not null
 
+DBCC CHECKIDENT ('tblProduct_Type', RESEED, 0);
+GO
+
+DELETE FROM tblPRODUCT
+WHERE ProductID is not null
+
+DBCC CHECKIDENT ('tblProduct', RESEED, 0);
+GO
+
 SELECT * FROM Sheet1$
 
 
@@ -24,3 +33,4 @@ INSERT INTO tblPRODUCT(ProductTypeID, ProductName, ProductPrice)
 SELECT DISTINCT PT.ProductTypeID, F.ProductName, F.Price
 FROM Sheet1$ F
 	JOIN tblPRODUCT_TYPE PT on F.ProductTypeName = PT.ProductTypeName
+WHERE ProductName != 'Evergreens Salad'
