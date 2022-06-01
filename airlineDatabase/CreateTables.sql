@@ -17,11 +17,11 @@ CREATE TABLE tblPRODUCT(
 )
 GO
 
-
 CREATE TABLE tblORDER_PRODUCT(
     OrderProductID INT IDENTITY(1,1) primary key,
     ProductID INT FOREIGN KEY REFERENCES tblPRODUCT(ProductID) not null,
-    Quantity INT not null
+    Quantity INT not null,
+	OrderID INT FOREIGN KEY REFERENCES tblORDER(OrderID) not null
 )
 GO
 
