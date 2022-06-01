@@ -1,7 +1,7 @@
--- Complex queries
-
+-- Complex query
 -- Which products are the most popular for passengers in first class?
 -- that is also the most popular for passenger type 'VIP'
+-- Brian
 
 
 
@@ -33,6 +33,9 @@ GROUP BY PR.ProductName) B
 
 WHERE A.ProductName = B.ProductName
 ORDER BY A.TotalOrders DESC
+
+
+SELECT * FROM tblORDER_PRODUCT
 
 
 SELECT * FROM tblPASSENGER_TYPE
