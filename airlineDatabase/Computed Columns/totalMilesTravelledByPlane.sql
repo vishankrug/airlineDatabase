@@ -9,7 +9,7 @@ CREATE FUNCTION totalMilesTravelledByPlane(@PK INT)
     RETURNS INT
     AS BEGIN
         DECLARE @RET INT = (
-            SELECT PL.PlaneID, SUM(F.Miles) as TotalMilesTravelled
+            SELECT SUM(F.Miles) as TotalMilesTravelled
             FROM tblPLANE PL
             JOIN tblSEAT S ON PL.PlaneID = S.PlaneID
             JOIN tblBOOKING B ON S.SeatID = B.SeatID
@@ -24,4 +24,4 @@ CREATE FUNCTION totalMilesTravelledByPlane(@PK INT)
 GO
 
 ALTER TABLE tblPLANE
-ADD totalMilesTravelledByPlane AS (dbo.totalMilesTravelledByPlane(PL.PlaneID))
+ADD totalMilesTravelledByPlane AS (dbo.totalMilesTravelledByPlane(PlaneID))
