@@ -26,17 +26,22 @@ SET @PassengerTypeID = (SELECT PassengerTypeID FROM tblPASSENGER_TYPE WHERE Pass
 
 GO
 
-CREATE PROCEDURE populatePassenger
-@PassengerTypeID3 INT,
-@PassengerFName3 varchar(100),
-@PassengerLName3 varchar(100),
+CREATE OR ALTER PROCEDURE populatePassenger
+@PassengerTypeName3 varchar(255),
+@PassengerFName3 varchar(255),
+@PassengerLName3 varchar(255),
 @PassengerDOB3 Date,
 @PassengerAddress3 varchar(255),
 @PassengerCity3 varchar(255),
-@PassengerState3 varchar(50),
+@PassengerState3 varchar(100),
 @PassengerZIP3 varchar(50)
 
 AS
+DECLARE @PassengerTypeID3 INT
+
+EXEC getPassengerTypeID
+@PassengerTypeName1 = @PassengerTypeName3,
+@PassengerTypeID = @PassengerTypeID3 OUTPUT
 
 BEGIN TRANSACTION T1
 INSERT INTO tblPASSENGER (PassengerTypeID, PassengerFname, PassengerLname, PassengerDOB, PassengerAddress, PassengerCity, PassengerState, PassengerZIP)
@@ -44,10 +49,10 @@ VALUES (@PassengerTypeID3, @PassengerFName3, @PassengerLName3, @PassengerDOB3, @
 COMMIT TRANSACTION T1 
 
 GO
-CREATE PROCEDURE populatePassengerWrapper
+CREATE OR ALTER PROCEDURE populatePassengerWrapper
 @RUN INT
-AS DECLARE @PassengerFName4 varchar(100), @PassengerLName4 varchar(100), @PassengerDOB4 DATE, @PassengerAddress4 varchar(255), @PassengerCity4 varchar(255), 
-            @PassengerState4 varchar(50), @PassengerZIP4 varchar(50)
+AS DECLARE @PassengerFName4 varchar(255), @PassengerLName4 varchar(255), @PassengerDOB4 DATE, @PassengerAddress4 varchar(255), @PassengerCity4 varchar(255), 
+            @PassengerState4 varchar(100), @PassengerZIP4 varchar(50), @PassengerTypeName4 varchar(255)
 
 DECLARE @C_RowCount INT = (SELECT COUNT(*) FROM PEEPS.dbo.tblCUSTOMER)
 
@@ -67,9 +72,10 @@ WHILE @RUN > 0
         SET @PassengerCity4 = (SELECT CustomerState FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
         SET @PassengerState4 = (SELECT CustomerCity FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
         SET @PassengerZIP4 = (SELECT CustomerZip FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
+        SET @PassengerTypeName4 = (SELECT PassengerTypeName FROM tblPASSENGER_TYPE WHERE PassengerTypeID = @PassengerTypeID4)
 
         EXEC populatePassenger
-            @PassengerTypeID3 = @PassengerTypeID4,
+            @PassengerTypeName3 = @PassengerTypeName4,
             @PassengerFName3 = @PassengerFName4,
             @PassengerLName3 = @PassengerLName4,
             @PassengerDOB3 = @PassengerDOB4,
@@ -87,7 +93,6 @@ GO
 EXEC populatePassengerWrapper
 @RUN = 10000
 
-SELECT * FROM tblPASSENGER
 
 -- DECLARE @PassengerTypeID3 INT, @PassengerTypeCount3 INT
 -- SET @PassengerTypeCount3 = (SELECT COUNT(*) FROM tblPASSENGER_TYPE)
