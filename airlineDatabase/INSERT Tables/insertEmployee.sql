@@ -9,8 +9,8 @@ GO
 SELECT * FROM tblEMPLOYEE
 GO
 
-CREATE PROCEDURE getEmployeeTypeID
-@ETName VARCHAR(50),
+CREATE OR ALTER PROCEDURE getEmployeeTypeID
+@ETName VARCHAR(100),
 @ET_ID INT OUTPUT
 AS
 SET @ET_ID = (SELECT EmployeeTypeID FROM tblEMPLOYEE_TYPE WHERE EmployeeTypeName = @ETName)
@@ -36,8 +36,8 @@ GO
 
 GO
 
-CREATE PROCEDURE populateEmployee
-@EmployeeTypeID3 INT,
+CREATE OR ALTER PROCEDURE populateEmployee
+@EmployeeTypeName3 varchar(100),
 @EmployeeFName3 varchar(100),
 @EmployeeLName3 varchar(100),
 @EmployeeDOB3 Date,
@@ -45,6 +45,11 @@ CREATE PROCEDURE populateEmployee
 @EmployeeEndDate3 DATE
 
 AS
+DECLARE @EmployeeTypeID3 INT
+
+EXEC getEmployeeTypeID
+@ETName = @EmployeeTypeName3,
+@ET_ID = @EmployeeTypeID3 OUTPUT
 
 BEGIN TRANSACTION T1
 INSERT INTO tblEMPLOYEE (EmployeeTypeID, FName, LNAME, DateOfBirth, StartDate, EndDate)
@@ -52,9 +57,9 @@ VALUES (@EmployeeTypeID3, @EmployeeFName3, @EmployeeLName3, @EmployeeDOB3, @Empl
 COMMIT TRANSACTION T1 
 
 GO
-CREATE PROCEDURE populateEmployeeWrapper
+CREATE OR ALTER PROCEDURE populateEmployeeWrapper
 @RUN INT
-AS DECLARE @EmployeeFName4 varchar(100), @EmployeeLName4 varchar(100), @EmployeeDOB4 Date, @EmployeeStartDate4 DATE, @EmployeeEndDate4 DATE
+AS DECLARE @EmployeeFName4 varchar(100), @EmployeeLName4 varchar(100), @EmployeeDOB4 Date, @EmployeeStartDate4 DATE, @EmployeeEndDate4 DATE, @EmployeeTypeName4 varchar(100)
 
 DECLARE @C_RowCount INT = (SELECT COUNT(*) FROM PEEPS.dbo.tblCUSTOMER)
 
@@ -79,9 +84,10 @@ WHILE @RUN > 0
         SET @EmployeeDOB4 = (SELECT DateOfBirth FROM PEEPS.dbo.tblCUSTOMER WHERE CustomerID = @CustomerID4)
         SET @EmployeeStartDate4 = @StartDate
         SET @EmployeeEndDate4 = NULL
+        SET @EmployeeTypeName4 = (SELECT EmployeeTypeName FROM tblEMPLOYEE_TYPE WHERE EmployeeTypeID = @EmployeeTypeID4)
 
         EXEC populateEmployee
-            @EmployeeTypeID3 = @EmployeeTypeID4,
+            @EmployeeTypeName3 = @EmployeeTypeName4,
             @EmployeeFName3 = @EmployeeFName4,
             @EmployeeLName3 = @EmployeeLName4,
             @EmployeeDOB3 = @EmployeeDOB4,
@@ -95,7 +101,7 @@ WHILE @RUN > 0
 GO
 
 EXEC populateEmployeeWrapper
-@RUN = 2000
+@RUN = 100
 
 
 
