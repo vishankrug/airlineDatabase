@@ -12,17 +12,17 @@ SET @ProductID1 = (SELECT ProductID FROM tblPRODUCT WHERE ProductName = @Product
  
 GO
 
-CREATE OR ALTER PROCEDURE getBookingID
-@PassengerID2 INT, 
-@RouteID2 INT,
-@SeatID2 INT,
-@BookingID2 INT OUTPUT
-AS 
+--CREATE OR ALTER PROCEDURE getBookingID
+--@PassengerID2 INT, 
+--@RouteID2 INT,
+--@SeatID2 INT,
+--@BookingID2 INT OUTPUT
+--AS 
 
-SET @BookingID2 = (SELECT BookingID FROM tblBOOKING WHERE PassengerID = @PassengerID2 
-                    AND RouteID = @RouteID2 AND SeatID = @SeatID2)
+--SET @BookingID2 = (SELECT BookingID FROM tblBOOKING WHERE PassengerID = @PassengerID2 
+--                    AND RouteID = @RouteID2 AND SeatID = @SeatID2)
  
-GO
+--GO
 
 
 CREATE OR ALTER PROCEDURE insertOrder 
@@ -67,7 +67,7 @@ IF @PassengerID3 IS NULL
 
 EXEC getRouteID
 @RouteName1 = @RouteName3,
-@RouteID = @RouteID3 OUTPUT
+@RouteID1 = @RouteID3 OUTPUT
 
 IF @RouteID3 IS NULL
     BEGIN
@@ -87,11 +87,14 @@ IF @SeatID3 IS NULL
         THROW 54570, 'Seat ID cannot be null, process is terminating', 1;
     END
 
+
 EXEC getBookingID
-@PassengerID2 = @PassengerID3, 
-@RouteID2 = @RouteID3,
-@SeatID2 = @SeatID3,
-@BookingID2 = @BookingID3 OUTPUT
+@F = @FName3,
+@L = @LName3,
+@DOB = @DOB3,
+@RtName = @RouteName3,
+@SName = @SeatName3,
+@BookingID = @BookingID3 OUTPUT
 
 IF @BookingID3 IS NULL
     BEGIN
@@ -178,7 +181,7 @@ GO
 
 
 
-EXEC wrapper_insertOrder 5000
+EXEC wrapper_insertOrder 50000
 
 
 
@@ -191,6 +194,11 @@ EXEC wrapper_insertOrder 5000
 -- TroubleShooting code
 
 SELECT * FROM tblORDER
+
+
+SELECT * FROM tblPASSENGER
+
+SELECT * FROM tblORDER_PRODUCT
 
 /*
 

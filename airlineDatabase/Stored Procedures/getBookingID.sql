@@ -10,22 +10,13 @@ AS
 SET @RouteID1 = (SELECT RouteID FROM tblRoute WHERE RouteName = @RouteName1)
 GO
 
-
-
-
-
-
-
 -- getBookingID stored procedure
 CREATE OR ALTER PROCEDURE getBookingID
 @F VARCHAR(100),
 @L VARCHAR(100),
 @DOB DATE,
-
 @RtName varchar(50),
-
 @SName varchar(10),
-
 @BookingID INT OUTPUT
 
 AS
