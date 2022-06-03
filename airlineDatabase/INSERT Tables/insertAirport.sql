@@ -3,7 +3,7 @@
 ------------------------- Brian --------------------------
 USE INFO_430_Proj_04
 GO
-DROP TABLE airport_data$
+
 SELECT * FROM airport_data$
 
 CREATE TABLE AiportPK (

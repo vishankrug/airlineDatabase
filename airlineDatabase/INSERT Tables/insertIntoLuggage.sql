@@ -24,4 +24,7 @@ BEGIN
 GO
 
 EXEC insert_into_luggage
-@RUN = 10000
+@RUN = 100
+
+
+SELECT * FROM tblLUGGAGE

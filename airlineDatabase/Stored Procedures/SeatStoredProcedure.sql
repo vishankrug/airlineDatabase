@@ -43,8 +43,11 @@ CREATE OR ALTER PROCEDURE popSeat
 AS
 
 DECLARE @P_ID INT, @CL_ID INT, @SeatName INT
+DECLARE @Seat_RowCount INT
 
-SET @SeatName = (SELECT FLOOR(RAND()*(1000000-100+1))+100)
+SET @Seat_RowCount = (SELECT COUNT(*) FROM tblSEAT)
+
+SET @SeatName = @Seat_RowCount + 1
 
 EXEC getPlaneID
 @PlaneName = @Pname,
@@ -104,13 +107,14 @@ WHILE @RUN > 0
 GO
 
 EXEC wrapper_popSEAT
-@RUN = 10000
+@RUN = 400000
 
 SELECT * FROM tblSEAT
 
 
 DELETE FROM tblSEAT 
 WHERE PlaneID is null
+AND SeatID > 20000
 
 DBCC CHECKIDENT ('[tblSEAT]', RESEED, 0);
 GO

@@ -1,12 +1,16 @@
 -- populating luggage stored procedure
 
+USE INFO_430_Proj_04
+GO
+
 CREATE OR ALTER PROCEDURE getLuggageTypeID
 @LTName VARCHAR(100),
 @LuggageTypeID INT OUTPUT
 AS
 SET @LuggageTypeID = (SELECT LuggageTypeID FROM tblLUGGAGE_TYPE WHERE LuggageTypeName = @LTName)
+GO
 
-go
+
 CREATE OR ALTER PROCEDURE populateLuggageTable
 @PFirst VARCHAR(100),
 @PLast VARCHAR(100),
@@ -27,6 +31,7 @@ EXEC getBookingID
 @RtName = @RtName1,
 @SName = @SName1,
 @BookingID = @B_ID OUTPUT
+
 
 IF @B_ID IS NULL
    BEGIN

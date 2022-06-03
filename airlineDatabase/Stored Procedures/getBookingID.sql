@@ -1,3 +1,21 @@
+CREATE OR ALTER PROCEDURE 
+
+GO
+
+
+CREATE PROCEDURE getRouteID
+@RouteName1 VARCHAR(50),
+@RouteID1 INT OUTPUT 
+AS 
+SET @RouteID1 = (SELECT RouteID FROM tblRoute WHERE RouteName = @RouteName1)
+GO
+
+
+
+
+
+
+
 -- getBookingID stored procedure
 CREATE OR ALTER PROCEDURE getBookingID
 @F VARCHAR(100),
@@ -22,7 +40,7 @@ EXEC getPassengerID
 
 EXEC getRouteID
 @RouteName1 = @RtName,
-@RouteID = @R_ID OUTPUT
+@RouteID1 = @R_ID OUTPUT
 
 
 EXEC getSeatID

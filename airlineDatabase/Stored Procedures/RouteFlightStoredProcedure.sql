@@ -16,7 +16,6 @@ CREATE PROCEDURE getRouteID
 @RouteID1 INT OUTPUT 
 AS 
 SET @RouteID1 = (SELECT RouteID FROM tblRoute WHERE RouteName = @RouteName1)
-
 GO
 
 CREATE PROCEDURE populateRouteFlight

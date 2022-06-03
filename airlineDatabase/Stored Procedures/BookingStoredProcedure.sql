@@ -43,7 +43,7 @@ DECLARE @S_RowCount INT = (SELECT COUNT(*) FROM tblSEAT)
 
 EXEC getRouteID
 @RouteName1 = @RouteName2,
-@RouteID = @RouteID1 OUTPUT
+@RouteID1 = @RouteID1 OUTPUT
 
 IF @RouteID1 IS NULL
    BEGIN
@@ -141,11 +141,14 @@ EXEC populateBookingTable
 @SeatName2 = "242"
 
 EXEC populateBooking_wrapper
-@RUN = 500
+@RUN = 100
 
 
 SELECT * FROM tblBOOKING
 SELECT * FROM tblROUTE
+
+DELETE FROM tblBOOKING
+WHERE BookingID > 1270
 
 SELECT * FROM tblSEAT
 

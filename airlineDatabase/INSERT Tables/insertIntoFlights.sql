@@ -122,6 +122,6 @@ BEGIN
 GO
 
 EXEC insert_into_flights
-@RUN = 1
+@RUN = 100000
 
 SELECT * FROM tblFLIGHT
