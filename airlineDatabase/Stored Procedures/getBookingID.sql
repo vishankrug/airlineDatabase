@@ -1,3 +1,4 @@
+-- create procedure to get BookingID (Cynthia)
 CREATE OR ALTER PROCEDURE 
 
 GO

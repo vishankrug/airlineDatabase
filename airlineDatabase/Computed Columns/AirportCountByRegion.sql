@@ -1,4 +1,4 @@
--- computed column: Number of airports in a given region
+-- computed column: Number of airports in a given region (Cynthia)
 Use INFO_430_Proj_04;
 
 GO

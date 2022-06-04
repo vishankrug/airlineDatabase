@@ -1,4 +1,4 @@
--- populating luggage stored procedure
+-- populating luggage stored procedure (Cynthia)
 
 USE INFO_430_Proj_04
 GO

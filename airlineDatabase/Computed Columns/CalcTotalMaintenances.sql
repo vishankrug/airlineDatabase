@@ -1,4 +1,4 @@
--- Computed Column: How Many maintenances have been done for each type of maintenanace 
+-- Computed Column: How Many maintenances have been done for each type of maintenanace (Cynthia)
 
 Use INFO_430_Proj_04;
 GO

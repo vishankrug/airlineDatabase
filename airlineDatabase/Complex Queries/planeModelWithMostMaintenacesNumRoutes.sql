@@ -1,4 +1,4 @@
--- find the planes with the most maintenances performed on it and the number of routes its flown on
+-- find the planes with the most maintenances performed on it and the number of routes its flown on (Cynthia)
 USE INFO_430_Proj_04
 GO
 
