@@ -1,3 +1,5 @@
+-- Vishank
+
 Use INFO_430_Proj_04;
 GO
 
@@ -111,6 +113,7 @@ BEGIN
     EXEC populateFlights
     @FlightName1 = @FlightName2,
     @FlightTypeName2 = @FlightTypeName3,
+
     @AirportNameDeparture1 = @AirportDepartureName,
     @AirportNameArrival1 = @AirportNameArrival,
     @ArrivalTime1 = @ArrivalTime2,

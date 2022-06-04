@@ -4,7 +4,7 @@ GO
 
 --- INSERT tblEmployee
 
------------- BRIAN ----------------
+------------ Vishank ----------------
 
 SELECT * FROM tblEMPLOYEE
 GO

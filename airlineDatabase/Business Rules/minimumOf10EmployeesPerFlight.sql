@@ -1,3 +1,6 @@
+-- Vishank
+-- Minimum number of employees per flight is 10
+
 USE INFO_430_Proj_04
 
 GO 

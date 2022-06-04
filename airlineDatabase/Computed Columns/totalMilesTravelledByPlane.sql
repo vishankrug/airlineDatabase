@@ -4,6 +4,7 @@ USE INFO_430_Proj_04
 GO 
 
 -- How many miles a plane have traveled (total miles traveled) in tblPLANE
+-- Vishank
 
 CREATE FUNCTION totalMilesTravelledByPlane(@PK INT)
     RETURNS INT

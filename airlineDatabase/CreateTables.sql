@@ -1,7 +1,7 @@
 Use INFO_430_Proj_04;
 
 --------------------LOOK UP TABLES---------------------------------------
-
+-- Vishank
 CREATE TABLE tblPRODUCT_TYPE(
     ProductTypeID INT IDENTITY(1,1) primary key,
     ProductTypeName varchar(100),

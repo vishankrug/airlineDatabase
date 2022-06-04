@@ -1,3 +1,6 @@
+-- Vishank
+-- No pilot can be older than 65
+
 USE INFO_430_Proj_04
 
 GO

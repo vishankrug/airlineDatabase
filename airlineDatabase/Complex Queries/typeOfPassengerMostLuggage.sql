@@ -1,4 +1,5 @@
--- What type of passenger carries the most luggage by count
+-- What type of passenger carries the most luggage by count that is also flying to North America
+-- Vishank
 
 Use INFO_430_Proj_04;
 
@@ -14,4 +15,5 @@ JOIN tblAIRPORT A ON F.ArrivalID = A.AirportID
 JOIN tblCITY C ON C.CityID = A.CityID
 JOIN tblCOUNTRY CO ON CO.CountryID = C.CountryID
 JOIN tblREGION RE ON RE.RegionID = CO.RegionID
+WHERE RE.RegionName = 'NA'
 GROUP BY PT.PassengerTypeName

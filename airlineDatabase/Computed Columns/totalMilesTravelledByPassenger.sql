@@ -4,6 +4,7 @@ USE INFO_430_Proj_04
 GO 
 
 -- How many miles passengers have traveled (total miles traveled) in tblPASSENGER
+-- Vishank
 
 CREATE OR ALTER FUNCTION totalMilesTravelledByPassenger(@PK INT)
     RETURNS INT
